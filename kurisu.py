@@ -83,7 +83,7 @@ async def talk(ctx):
     message = ctx.message
     message_content = message.content[len("!talk "):].strip()
 
-    chatbot_response = Kurisu.respond(message_content)
+    chatbot_response = Kurisu.respond(message_content, message.author.name)
     for segment in chatbot_response:
         await ctx.send(segment)
 
