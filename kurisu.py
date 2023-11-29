@@ -26,8 +26,10 @@ class Chatbot:
         self.summary = ""
 
     def respond(self, message, author):
+        print("=============DEBUG INFO FOR REQUEST=============")
         prompt = self.generate_prompt(message, author)
-        print(prompt)
+        print("===========END DEBUG INFO FOR REQUEST===========")
+
         response = openai.ChatCompletion.create(
             model=self.model_engine,
             messages=[
@@ -52,7 +54,12 @@ class Chatbot:
                 self.short_term_chat += "Kurisu Makise: "
             self.short_term_chat += f"{x[1].rstrip()}\n"
 
+        print("=====TEMP CHAT=====")
+        print(self.short_term_chat)
+        print("===END TEMP CHAT===")
+
         if (time_to_summarize):
+            print("SUMMARIZING")
             response = openai.ChatCompletion.create(
                 model=self.model_engine,
                 messages=[
@@ -62,11 +69,13 @@ class Chatbot:
 
             self.summary = response['choices'][0]['message']['content']
 
-            return f"Here's a short summary of the conversation so far: {self.summary}\n{author}: {message}\nSylva: "
+            return f"Here's a short summary of the conversation so far: {self.summary}\n{author}: {message}\nKurisu Makise: "
 
         if (self.summary != ""):
-            return f"Here's a short summary of the conversation so far: {self.summary}\n{self.short_term_chat}{author}: {message}\nSylva: "
+            print("USING SUMMARY")
+            return f"Here's a short summary of the conversation so far: {self.summary}\n{self.short_term_chat}{author}: {message}\nKurisu Makise: "
 
+        print("RETURN RESPONSE")
         return f"{self.short_term_chat}{author}: {message}\nKurisu Makise: "
 
 
