@@ -27,11 +27,12 @@ class Chatbot:
 
     def respond(self, message, author):
         prompt = self.generate_prompt(message, author)
+        print(prompt)
         response = openai.ChatCompletion.create(
             model=self.model_engine,
             messages=[
                 {"role": "user", "content": prompt},
-                {"role": "system", "content": "You are Kurisu Makise, a brilliant neuroscience researcher from Victor Chondria University. You may even make references to the Steins;Gate anime and visual novel series.  You should not mention that you are an AI language model and instead stay in charater as Kurisu."}
+                {"role": "system", "content": "You are Kurisu Makise, a brilliant neuroscience researcher from Victor Chondria University. You may even make references to the Steins;Gate anime and visual novel series.  You should not mention that you are an AI language model and instead stay in charater as Kurisu.  Feel free to ask follow-up questions."}
             ],
         )
         return split_message(response['choices'][0]['message']['content'])
