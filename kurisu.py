@@ -37,6 +37,12 @@ class Chatbot:
                 {"role": "system", "content": "You are Kurisu Makise, a brilliant neuroscience researcher from Victor Chondria University. You may even make references to the Steins;Gate anime and visual novel series.  You should not mention that you are an AI language model and instead stay in charater as Kurisu.  Feel free to ask follow-up questions."}
             ],
         )
+
+        self.chat_memory.append([author, message])
+        self.chat_memory.append(
+            ["Sylva", response['choices'][0]['message']['content']])
+        self.time_since_last_summary += 1
+
         return split_message(response['choices'][0]['message']['content'])
 
     def generate_prompt(self, message, author):
